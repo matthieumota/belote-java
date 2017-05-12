@@ -29,7 +29,6 @@ public class Window extends JFrame implements ActionListener {
         for(Card card : cards.getCards()) {
             System.out.println(card.getCard());
         }
-        cards.mixing();
         /*for(Card card : cards.getCards()) {
             JLabel label = new JLabel(card.getCard());
             this.board.add(label);

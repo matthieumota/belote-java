@@ -1,5 +1,6 @@
 package com.boxydev;
 
+import com.boxydev.card.Card;
 import com.boxydev.card.CardPackage;
 
 import java.util.ArrayList;
@@ -24,16 +25,17 @@ public class App {
     }
 
     public void run() {
+        cards.mixing();
         window.cards = cards;
         player.setName("Matthieu");
         player.setPosition(0);
         for (int i = 1; i < 4; i++) {
             bots.add(new Player("Bot "+i, i));
         }
-        System.out.println(player.getName());
+        /*System.out.println(player.getName());
         for (Player bot : bots) {
             System.out.println(bot.getName());
-        }
+        }*/
         dispatch();
         System.out.print("Lance l'application");
     }

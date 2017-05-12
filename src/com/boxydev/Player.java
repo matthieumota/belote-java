@@ -37,7 +37,6 @@ public class Player {
     }
 
     public void distribute(CardPackage cards, List<Player> players) {
-        System.out.println(this.getName());
         List<Player> targets = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             if (i != this.getPosition()) {
@@ -46,6 +45,24 @@ public class Player {
         }
         for (Player target : targets) {
             System.out.println(target.getName());
+            for (int i = 0; i < 8; i++) {
+                target.cards.add(cards.getCards().get(i));
+                cards.getCards().remove(i);
+            }
+        }
+        System.out.println(this.getName());
+        for (int i = 7; i >= 0; i--) {
+            this.cards.add(cards.getCards().get(i));
+            cards.getCards().remove(i);
+        }
+        for(Card card : cards.getCards()) {
+            System.out.println(card.getCard());
+        }
+        for(Player player : targets) {
+            System.out.println("Main de " + player.getName());
+            for(Card card : player.cards) {
+                System.out.println(card.getCard());
+            }
         }
     }
 }
