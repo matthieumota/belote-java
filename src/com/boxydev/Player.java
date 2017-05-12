@@ -1,5 +1,6 @@
 package com.boxydev;
 
+import com.boxydev.card.Card;
 import com.boxydev.card.CardPackage;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 public class Player {
     private String name;
     private int position;
+    private List<Card> cards = new ArrayList<>();
 
     public Player(String name, Integer position) {
         this.name = name;
@@ -35,30 +37,15 @@ public class Player {
     }
 
     public void distribute(CardPackage cards, List<Player> players) {
-        System.out.print(this.getPosition());
+        System.out.println(this.getName());
         List<Player> targets = new ArrayList<>();
-        switch (this.getPosition()) {
-            case 0:
-                targets.add(players.get(1));
-                targets.add(players.get(2));
-                targets.add(players.get(3));
-            break;
-            case 1:
-                targets.add(players.get(0));
-                targets.add(players.get(2));
-                targets.add(players.get(3));
-            break;
-            case 2:
-                targets.add(players.get(0));
-                targets.add(players.get(1));
-                targets.add(players.get(3));
-            break;
-            case 3:
-                targets.add(players.get(0));
-                targets.add(players.get(1));
-                targets.add(players.get(2));
-            break;
+        for (int i = 0; i < 4; i++) {
+            if (i != this.getPosition()) {
+                targets.add(players.get(i));
+            }
         }
-        System.out.println(targets);
+        for (Player target : targets) {
+            System.out.println(target.getName());
+        }
     }
 }
