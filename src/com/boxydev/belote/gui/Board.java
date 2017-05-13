@@ -14,31 +14,34 @@ import java.util.List;
 
 public class Board extends JPanel implements ActionListener {
     private ImageIcon background = new ImageIcon("src/com/boxydev/belote/images/playmat.jpg");
-    public CardPackage cards;
+    private static final Integer CARD_WIDTH = 160;
+    private static final Integer CARD_HEIGHT = 200;
+    private static final Integer CARD_SPACE = CARD_WIDTH / 2;
     public List<Player> players;
     public Integer cardPlaying = -1;
+    public Integer numberCardPlayer = 0;
 
     public Board() {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                cardPlaying = 1;
-                int x = e.getX();
-                int y = e.getY();
-                System.out.println(x+":"+y);
+                int x = e.getX() - (getWidth() - CARD_SPACE * (numberCardPlayer + 1)) / 2;
+                int y = e.getY() - (getHeight() - (CARD_HEIGHT + 20));
+                if (x >= 0 && x <= (CARD_SPACE * (numberCardPlayer + 1)) && y >= 0 && y <= CARD_HEIGHT) {
+                    int cardNumber = (numberCardPlayer == x / CARD_SPACE) ? numberCardPlayer - 1 : x / CARD_SPACE;
+                    Card selectedCard = players.get(0).getCards().get(cardNumber);
+                    players.get(0).getCards().remove(cardNumber);
+                    numberCardPlayer = players.get(0).getCards().size();
+                    repaint();
+                }
             }
         });
     }
 
-    public Board addPlayers(List<Player> players) {
+    public void addPlayers(List<Player> players) {
         this.players = players;
-        return this;
-    }
-
-    public Board addCards(CardPackage cards) {
-        this.cards = cards;
-        return this;
+        numberCardPlayer = players.get(0).getCards().size();
     }
 
     @Override
@@ -53,12 +56,12 @@ public class Board extends JPanel implements ActionListener {
         graphics.setColor(Color.YELLOW);
         graphics.drawRect((width - 200) / 2, height - 202, 200, 200);
 
-        int posx = (width - 80 * 4) / 2;
-        int posy = height - 120;
+        int posx = (width - CARD_SPACE * (numberCardPlayer + 1)) / 2;
+        int posy = height - (CARD_HEIGHT + 20);
         for (Card card : players.get(0).getCards()) {
             System.out.println(card.getCard());
-            graphics.drawImage(card.getCardImage(), posx, posy, 80, 100, null);
-            posx += 40;
+            graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_HEIGHT, null);
+            posx += CARD_SPACE;
         }
 
         // Bot 1

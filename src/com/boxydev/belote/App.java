@@ -48,7 +48,7 @@ public class App extends JFrame implements ActionListener {
         distributor = players.get(random.nextInt(4));
         distributor.distribute(cards, players);
 
-        board.addPlayers(players).addCards(cards);
+        board.addPlayers(players);
         /*int cardPlaying = -1;
         while(cardPlaying == -1) {
             cardPlaying = board.getCardPlaying();
