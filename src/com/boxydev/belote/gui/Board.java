@@ -6,12 +6,30 @@ import com.boxydev.belote.card.CardPackage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class Board extends JPanel {
+public class Board extends JPanel implements ActionListener {
     private ImageIcon background = new ImageIcon("src/com/boxydev/belote/images/playmat.jpg");
     public CardPackage cards;
     public List<Player> players;
+    public Integer cardPlaying = -1;
+
+    public Board() {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                cardPlaying = 1;
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println(x+":"+y);
+            }
+        });
+    }
 
     public Board addPlayers(List<Player> players) {
         this.players = players;
@@ -35,18 +53,19 @@ public class Board extends JPanel {
         graphics.setColor(Color.YELLOW);
         graphics.drawRect((width - 200) / 2, height - 202, 200, 200);
 
-        int index = 0;
+        int posx = (width - 80 * 4) / 2;
+        int posy = height - 120;
         for (Card card : players.get(0).getCards()) {
             System.out.println(card.getCard());
-            graphics.drawImage(card.getCardImage(), index, 0, 80, 100, null);
-            index += 40;
+            graphics.drawImage(card.getCardImage(), posx, posy, 80, 100, null);
+            posx += 40;
         }
 
         // Bot 1
         graphics.setColor(Color.BLUE);
         graphics.drawRect(0, (height - 200) / 2, 200, 200);
 
-        index = 0;
+        int index = 0;
         for (Card card : players.get(1).getCards()) {
             System.out.println(card.getCard());
             graphics.drawImage(card.getCardImage(), index, 110, 80, 100, null);
@@ -74,6 +93,15 @@ public class Board extends JPanel {
             graphics.drawImage(card.getCardImage(), index, 330, 80, 100, null);
             index += 40;
         }
+
+    }
+
+    public int getCardPlaying() {
+        return cardPlaying;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
 
     }
 }

@@ -25,10 +25,17 @@ public class App extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setJMenuBar(menu);
+        JMenuItem close = new JMenuItem("Fermer");
+        menu.add(close);
+        close.addActionListener(this);
+        setContentPane(board);
+        setVisible(true);
     }
 
-    public void prepare() {
+    public void run() {
         cards.mixing();
+        cards.cut();
         player.setName("Matthieu");
         player.setPosition(0);
         for (int i = 1; i < 4; i++) {
@@ -40,22 +47,18 @@ public class App extends JFrame implements ActionListener {
         Random random = new Random();
         distributor = players.get(random.nextInt(4));
         distributor.distribute(cards, players);
-    }
 
-    public void run() {
-        setJMenuBar(menu);
-        JMenuItem close = new JMenuItem("Fermer");
-        menu.add(close);
-        close.addActionListener(this);
         board.addPlayers(players).addCards(cards);
-        setContentPane(board);
-        this.setVisible(true);
-        System.out.print("Lance l'application");
+        /*int cardPlaying = -1;
+        while(cardPlaying == -1) {
+            cardPlaying = board.getCardPlaying();
+            System.out.println("Toujours pas !");
+        }*/
+        System.out.println("Lance l'application");
     }
 
     public static void main(String[] args) {
         App app = new App();
-        app.prepare();
         app.run();
     }
 
