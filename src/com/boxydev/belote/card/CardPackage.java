@@ -1,4 +1,4 @@
-package com.boxydev.card;
+package com.boxydev.belote.card;
 
 import java.util.ArrayList;
 import java.util.Collections;

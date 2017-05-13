@@ -1,4 +1,7 @@
-package com.boxydev.card;
+package com.boxydev.belote.card;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class Card {
     private int color;
@@ -33,15 +36,20 @@ public class Card {
             case 1: return "Roi";
             case 2: return "Dame";
             case 3: return "Valet";
-            case 4: return "10";
-            case 5: return "9";
-            case 6: return "8";
-            case 7: return "7";
+            case 4: return "Dix";
+            case 5: return "Neuf";
+            case 6: return "Huit";
+            case 7: return "Sept";
             default: return "";
         }
     }
 
     public String getCard() {
-        return "C'est "+getValue()+" de "+getColor();
+        return getValue()+" de "+getColor();
+    }
+
+    public Image getCardImage() {
+        ImageIcon image = new ImageIcon("src/com/boxydev/belote/images/"+getValue()+getColor()+".png");
+        return image.getImage();
     }
 }
