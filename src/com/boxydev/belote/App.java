@@ -1,5 +1,6 @@
 package com.boxydev.belote;
 
+import com.boxydev.belote.card.Card;
 import com.boxydev.belote.card.CardPackage;
 import com.boxydev.belote.gui.Board;
 
@@ -13,10 +14,10 @@ public class App extends JFrame implements ActionListener {
     private JMenuBar menu = new JMenuBar();
     private Board board = new Board();
 
-    private CardPackage cards = new CardPackage();
-    private Player player = new Player();
-    private List<Player> bots = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private CardPackage cards;
+    private Player player;
+    private List<Player> bots;
+    private List<Player> players;
     private Integer distributor = 0;
 
     public App() {
@@ -29,36 +30,60 @@ public class App extends JFrame implements ActionListener {
         JMenuItem close = new JMenuItem("Fermer");
         menu.add(close);
         close.addActionListener(this);
+        JMenuItem restart = new JMenuItem("Relancer");
+        menu.add(restart);
+        restart.addActionListener(this);
         setContentPane(board);
         setVisible(true);
     }
 
     public void run() {
+        // Prepare lists
+        bots = new ArrayList<>();
+        players = new ArrayList<>();
+
         // Generate player
+        player = new Player();
         player.askName();
         // player.setName("Matthieu");
 
         // Generate bots
         for (int i = 1; i < 4; i++) {
-            bots.add(new Bot());
+            bots.add(new Bot("Bot "+i, i));
         }
 
         // Organize player and bots in players list
         players.add(player);
         players.addAll(bots);
 
-        // Mixing cards and cut
+        // Buy a card package, mixing and cut
         // @todo Maybe ask to current distributor n for cut
+        cards = new CardPackage();
         cards.mixing();
         cards.cut();
 
+        // Give 3 cards next distributor
+        int n = distributor;
         for (int i = 0; i < 4; i++) {
-            distributor++;
-            if (distributor > 3) distributor = 0;
-            cards.distribute(players.get(distributor), 3); // Give 3 cards next distributor
+            n++;
+            if (n > 3) n = 0;
+            cards.distribute(players.get(n), 3);
+        }
+
+        // Give 2 cards next distributor
+        n = distributor;
+        for (int i = 0; i < 4; i++) {
+            n++;
+            if (n > 3) n = 0;
+            cards.distribute(players.get(n), 2);
         }
 
         board.addPlayers(players);
+
+        Card displayCard = cards.display();
+        board.displayCard(displayCard);
+
+
         /*Card cardPlaying = null;
         while(cardPlaying == null) {
             cardPlaying = board.getCardPlaying();
@@ -74,6 +99,10 @@ public class App extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        System.exit(0);
+        if (actionEvent.getActionCommand() == "Relancer") {
+            run();
+        } else {
+            System.exit(0);
+        }
     }
 }

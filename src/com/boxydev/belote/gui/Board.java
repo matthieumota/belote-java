@@ -19,6 +19,7 @@ public class Board extends JPanel implements ActionListener {
     private static final Integer CARD_SPACE = CARD_WIDTH / 2;
     public List<Player> players;
     public Card cardPlaying = null;
+    private Card displayCard = null;
     public Integer numberCardPlayer = 0;
 
     public Board() {
@@ -45,6 +46,11 @@ public class Board extends JPanel implements ActionListener {
         repaint();
     }
 
+    public void displayCard(Card card) {
+        displayCard = card;
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -53,8 +59,11 @@ public class Board extends JPanel implements ActionListener {
 
         graphics.drawImage(background.getImage(), 0, 0, null);
 
-        if (players != null) {
+        if (displayCard != null) {
+            graphics.drawImage(displayCard.getCardImage(), width / 2 - CARD_WIDTH / 2, height / 2 - CARD_HEIGHT / 2, CARD_WIDTH, CARD_HEIGHT, null);
+        }
 
+        if (players != null) {
             // Joueur
             graphics.setColor(Color.YELLOW);
             graphics.drawRect((width - 200) / 2, height - 202, 200, 200);

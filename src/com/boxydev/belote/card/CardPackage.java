@@ -81,6 +81,12 @@ public class CardPackage {
         }
     }
 
+    public Card display() {
+        Card card = cards.get(0);
+        cards.remove(0);
+        return card;
+    }
+
     public List<Card> getCards() {
         return cards;
     }
