@@ -3,12 +3,13 @@ package com.boxydev.belote;
 import com.boxydev.belote.card.Card;
 import com.boxydev.belote.card.CardPackage;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
-    private String name;
-    private int position;
+    protected String name;
+    protected int position;
     private List<Card> cards = new ArrayList<>();
 
     public Player(String name, Integer position) {
@@ -26,6 +27,12 @@ public class Player {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void askName() {
+        while (name == null || name.isEmpty()) {
+            name = JOptionPane.showInputDialog("Quel est ton nom ?");
+        }
     }
 
     public int getPosition() {

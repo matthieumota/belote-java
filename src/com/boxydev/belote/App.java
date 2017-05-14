@@ -8,16 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class App extends JFrame implements ActionListener {
     private JMenuBar menu = new JMenuBar();
     private Board board = new Board();
+
     private CardPackage cards = new CardPackage();
     private Player player = new Player();
     private List<Player> bots = new ArrayList<>();
-    private Player distributor;
     private List<Player> players = new ArrayList<>();
+    private Integer distributor = 0;
 
     public App() {
         setTitle("Belote");
@@ -34,25 +34,35 @@ public class App extends JFrame implements ActionListener {
     }
 
     public void run() {
-        cards.mixing();
-        cards.cut();
-        player.setName("Matthieu");
-        player.setPosition(0);
+        // Generate player
+        player.askName();
+        // player.setName("Matthieu");
+
+        // Generate bots
         for (int i = 1; i < 4; i++) {
-            bots.add(new Player("Bot "+i, i));
+            bots.add(new Bot());
         }
+
+        // Organize player and bots in players list
         players.add(player);
         players.addAll(bots);
 
-        Random random = new Random();
-        distributor = players.get(random.nextInt(4));
-        distributor.distribute(cards, players);
+        // Mixing cards and cut
+        // @todo Maybe ask to current distributor n for cut
+        cards.mixing();
+        cards.cut();
+
+        for (int i = 0; i < 4; i++) {
+            distributor++;
+            if (distributor > 3) distributor = 0;
+            cards.distribute(players.get(distributor), 3); // Give 3 cards next distributor
+        }
 
         board.addPlayers(players);
-        /*int cardPlaying = -1;
-        while(cardPlaying == -1) {
+        /*Card cardPlaying = null;
+        while(cardPlaying == null) {
             cardPlaying = board.getCardPlaying();
-            System.out.println("Toujours pas !");
+            System.out.println(cardPlaying);
         }*/
         System.out.println("Lance l'application");
     }

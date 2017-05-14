@@ -1,10 +1,12 @@
 package com.boxydev.belote.card;
 
+import com.boxydev.belote.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CardPackage {
-    private List<Card> cardPackage = new ArrayList<Card>();
+    private List<Card> newCards = new ArrayList<Card>();
     private List<Card> cards = new ArrayList<Card>(32);
     private static final Color COEUR = new Color("Coeur");
     private static final Color PIQUE = new Color("Pique");
@@ -20,46 +22,46 @@ public class CardPackage {
     private static final Figure SEPT = new Figure("Sept", 0, 0, 1, 9);
 
     public CardPackage() {
-        cardPackage.add(new Card(COEUR, AS));
-        cardPackage.add(new Card(COEUR, ROI));
-        cardPackage.add(new Card(COEUR, DAME));
-        cardPackage.add(new Card(COEUR, VALET));
-        cardPackage.add(new Card(COEUR, DIX));
-        cardPackage.add(new Card(COEUR, NEUF));
-        cardPackage.add(new Card(COEUR, HUIT));
-        cardPackage.add(new Card(COEUR, SEPT));
-        cardPackage.add(new Card(PIQUE, AS));
-        cardPackage.add(new Card(PIQUE, ROI));
-        cardPackage.add(new Card(PIQUE, DAME));
-        cardPackage.add(new Card(PIQUE, VALET));
-        cardPackage.add(new Card(PIQUE, DIX));
-        cardPackage.add(new Card(PIQUE, NEUF));
-        cardPackage.add(new Card(PIQUE, HUIT));
-        cardPackage.add(new Card(PIQUE, SEPT));
-        cardPackage.add(new Card(TREFLE, AS));
-        cardPackage.add(new Card(TREFLE, ROI));
-        cardPackage.add(new Card(TREFLE, DAME));
-        cardPackage.add(new Card(TREFLE, VALET));
-        cardPackage.add(new Card(TREFLE, DIX));
-        cardPackage.add(new Card(TREFLE, NEUF));
-        cardPackage.add(new Card(TREFLE, HUIT));
-        cardPackage.add(new Card(TREFLE, SEPT));
-        cardPackage.add(new Card(CARREAU, AS));
-        cardPackage.add(new Card(CARREAU, ROI));
-        cardPackage.add(new Card(CARREAU, DAME));
-        cardPackage.add(new Card(CARREAU, VALET));
-        cardPackage.add(new Card(CARREAU, DIX));
-        cardPackage.add(new Card(CARREAU, NEUF));
-        cardPackage.add(new Card(CARREAU, HUIT));
-        cardPackage.add(new Card(CARREAU, SEPT));
+        newCards.add(new Card(COEUR, AS));
+        newCards.add(new Card(COEUR, ROI));
+        newCards.add(new Card(COEUR, DAME));
+        newCards.add(new Card(COEUR, VALET));
+        newCards.add(new Card(COEUR, DIX));
+        newCards.add(new Card(COEUR, NEUF));
+        newCards.add(new Card(COEUR, HUIT));
+        newCards.add(new Card(COEUR, SEPT));
+        newCards.add(new Card(PIQUE, AS));
+        newCards.add(new Card(PIQUE, ROI));
+        newCards.add(new Card(PIQUE, DAME));
+        newCards.add(new Card(PIQUE, VALET));
+        newCards.add(new Card(PIQUE, DIX));
+        newCards.add(new Card(PIQUE, NEUF));
+        newCards.add(new Card(PIQUE, HUIT));
+        newCards.add(new Card(PIQUE, SEPT));
+        newCards.add(new Card(TREFLE, AS));
+        newCards.add(new Card(TREFLE, ROI));
+        newCards.add(new Card(TREFLE, DAME));
+        newCards.add(new Card(TREFLE, VALET));
+        newCards.add(new Card(TREFLE, DIX));
+        newCards.add(new Card(TREFLE, NEUF));
+        newCards.add(new Card(TREFLE, HUIT));
+        newCards.add(new Card(TREFLE, SEPT));
+        newCards.add(new Card(CARREAU, AS));
+        newCards.add(new Card(CARREAU, ROI));
+        newCards.add(new Card(CARREAU, DAME));
+        newCards.add(new Card(CARREAU, VALET));
+        newCards.add(new Card(CARREAU, DIX));
+        newCards.add(new Card(CARREAU, NEUF));
+        newCards.add(new Card(CARREAU, HUIT));
+        newCards.add(new Card(CARREAU, SEPT));
     }
 
     public void mixing() {
         int number;
         for (int i = 32; i > 0; i--) {
             number = (int) (Math.random() * i);
-            cards.add(cardPackage.get(number));
-            cardPackage.remove(number);
+            cards.add(newCards.get(number));
+            newCards.remove(number);
         }
     }
 
@@ -68,6 +70,13 @@ public class CardPackage {
         cards.addAll(cards.subList(random, 32));
         cards.addAll(cards.subList(0, random));
         for (int i = 0; i < 31; i++) {
+            cards.remove(0);
+        }
+    }
+
+    public void distribute(Player player, int cardsNumber) {
+        for (int i = 0; i < cardsNumber; i++) {
+            player.getCards().add(cards.get(0));
             cards.remove(0);
         }
     }
