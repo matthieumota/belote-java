@@ -18,4 +18,20 @@ public class Figure {
     public String getName() {
         return name;
     }
+
+    public int getPoint() {
+        return point;
+    }
+
+    public void setPoint(int point) {
+        this.point = point;
+    }
+
+    public int getPointTrump() {
+        return pointTrump;
+    }
+
+    public void setPointTrump(int pointTrump) {
+        this.pointTrump = pointTrump;
+    }
 }

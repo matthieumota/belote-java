@@ -12,20 +12,20 @@ public class Card {
         this.figure = figure;
     }
 
-    public String getColor() {
-        return color.getName();
+    public Color getColor() {
+        return color;
     }
 
-    public String getFigure() {
-        return figure.getName();
+    public Figure getFigure() {
+        return figure;
     }
 
     public String getCard() {
-        return getFigure()+" de "+getColor();
+        return figure.getName()+" de "+color.getName();
     }
 
     public Image getCardImage() {
-        ImageIcon image = new ImageIcon("src/com/boxydev/belote/images/"+getFigure()+getColor()+".png");
+        ImageIcon image = new ImageIcon("src/com/boxydev/belote/images/"+figure.getName()+color.getName()+".png");
         return image.getImage();
     }
 }

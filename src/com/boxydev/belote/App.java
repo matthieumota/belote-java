@@ -78,11 +78,42 @@ public class App extends JFrame implements ActionListener {
             cards.distribute(players.get(n), 2);
         }
 
+        // Draw player on board
         board.addPlayers(players);
 
+        // Draw display card
         Card displayCard = cards.display();
         board.displayCard(displayCard);
 
+        // Ask for trump first round
+        boolean taker = false;
+        n = distributor;
+        int nPlayer = 0;
+        int take = -1;
+        while (!taker && nPlayer < 4) {
+            n++;
+            if (n > 3) n = 0;
+            taker = players.get(n).firstRound(n, displayCard);
+            if (taker) {
+                take = n;
+            }
+            nPlayer++;
+        }
+
+        System.out.println(take + " prend atout");
+
+        if (!taker) {
+            // Ask for trump second round
+        }
+
+        if (!taker) {
+            // Put all cards in package
+        } else {
+            // Oh ! We can play
+            players.get(0).getCards().add(displayCard);
+            displayCard = null;
+            board.displayCard(displayCard);
+        }
 
         /*Card cardPlaying = null;
         while(cardPlaying == null) {

@@ -47,6 +47,38 @@ public class Player {
         return cards;
     }
 
+    public boolean firstRound(int indexPlayer, Card displayCard) {
+        int response = 1;
+        int points = 0;
+
+        switch (indexPlayer) {
+            case 0 :
+                response = JOptionPane.showConfirmDialog(null, "Vous prenez ?", "Choix atout - Premier tour", JOptionPane.YES_NO_OPTION);
+            break;
+            default :
+                for (int i = 0; i < 5; i++) {
+                    String trump = displayCard.getColor().getName();
+                    if (trump == cards.get(i).getColor().getName()) {
+                        System.out.println(cards.get(i).getFigure().getPointTrump());
+                        points += cards.get(i).getFigure().getPointTrump();
+                    } else {
+                        System.out.println(cards.get(i).getFigure().getPoint());
+                        points += cards.get(i).getFigure().getPoint();
+                    }
+                }
+                if (points > 40) {
+                    response = 0;
+                }
+            break;
+        }
+
+        if (response == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     public void distribute(CardPackage cards, List<Player> players) {
         List<Player> targets = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
