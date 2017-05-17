@@ -62,64 +62,72 @@ public class App extends JFrame implements ActionListener {
         cards.mixing();
         cards.cut();
 
-        // Give 3 cards next distributor
-        int n = distributor;
-        for (int i = 0; i < 4; i++) {
-            n++;
-            if (n > 3) n = 0;
-            cards.distribute(players.get(n), 3);
-        }
-
-        // Give 2 cards next distributor
-        n = distributor;
-        for (int i = 0; i < 4; i++) {
-            n++;
-            if (n > 3) n = 0;
-            cards.distribute(players.get(n), 2);
-        }
-
-        // Draw player on board
-        board.addPlayers(players);
-
-        // Draw display card
-        Card displayCard = cards.display();
-        board.displayCard(displayCard);
-
-        // Ask for trump first round
-        boolean taker = false;
-        n = distributor;
-        int nPlayer = 0;
         int take = -1;
-        while (!taker && nPlayer < 4) {
-            n++;
-            if (n > 3) n = 0;
-            taker = players.get(n).firstRound(n, displayCard);
-            if (taker) {
-                take = n;
+        while (take < 0) {
+            // Give 3 cards next distributor
+            int n = distributor;
+            for (int i = 0; i < 4; i++) {
+                n++;
+                if (n > 3) n = 0;
+                cards.distribute(players.get(n), 3);
             }
-            nPlayer++;
-        }
 
-        System.out.println(take + " prend atout");
+            // Give 2 cards next distributor
+            n = distributor;
+            for (int i = 0; i < 4; i++) {
+                n++;
+                if (n > 3) n = 0;
+                cards.distribute(players.get(n), 2);
+            }
 
-        if (!taker) {
-            // Ask for trump second round
-        }
+            // Draw player on board
+            board.addPlayers(players);
 
-        if (!taker) {
-            // Put all cards in package
-        } else {
-            // Oh ! We can play
-            players.get(0).getCards().add(displayCard);
-            displayCard = null;
+            // Draw display card
+            Card displayCard = cards.display();
             board.displayCard(displayCard);
-        }
 
-        /*Card cardPlaying = null;
-        while(cardPlaying == null) {
-            cardPlaying = board.getCardPlaying();
-            System.out.println(cardPlaying);
-        }*/
+            // Ask for trump first round
+            boolean taker = false;
+            n = distributor;
+            int nPlayer = 0;
+            while (!taker && nPlayer < 4) {
+                n++;
+                if (n > 3) n = 0;
+                taker = players.get(n).firstRound(n, displayCard);
+                if (taker) {
+                    take = n;
+                }
+                nPlayer++;
+            }
+
+            System.out.println(take + " prend atout");
+
+            if (!taker) {
+                // Ask for trump second round
+            }
+
+            if (!taker) {
+                // Put all cards in package
+                for (int i = 0; i < 4; i++) {
+                    cards.getCards().addAll(players.get(i).getCards());
+                    players.get(i).getCards().clear();
+                }
+                cards.getCards().add(displayCard);
+                displayCard = null;
+                board.displayCard(displayCard);
+            } else {
+                // Oh ! We can play
+                players.get(take).getCards().add(displayCard);
+                displayCard = null;
+                board.displayCard(displayCard);
+            }
+        }
+            /*Card cardPlaying = null;
+            while(cardPlaying == null) {
+                cardPlaying = board.getCardPlaying();
+                System.out.println(cardPlaying);
+            }*/
         System.out.println("Lance l'application");
     }
 

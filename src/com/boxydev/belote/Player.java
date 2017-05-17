@@ -66,7 +66,7 @@ public class Player {
                         points += cards.get(i).getFigure().getPoint();
                     }
                 }
-                if (points > 40) {
+                if (points > 400) {
                     response = 0;
                 }
             break;
