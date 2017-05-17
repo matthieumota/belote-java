@@ -22,7 +22,7 @@ public class App extends JFrame implements ActionListener {
 
     public App() {
         setTitle("Belote");
-        setSize(1200, 800);
+        setSize(1400, 900);
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -17,6 +17,7 @@ public class Board extends JPanel implements ActionListener {
     private static final Integer CARD_WIDTH = 160;
     private static final Integer CARD_HEIGHT = 200;
     private static final Integer CARD_SPACE = CARD_WIDTH / 2;
+    private static final Integer CARD_SPACE_BOT = CARD_SPACE / 2;
     public List<Player> players;
     public Card cardPlaying = null;
     private Card displayCard = null;
@@ -54,59 +55,49 @@ public class Board extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        int width = getWidth();
-        int height = getHeight();
 
+        // Draw playmat
         graphics.drawImage(background.getImage(), 0, 0, null);
 
+        // Draw displayCard during distribution
         if (displayCard != null) {
-            graphics.drawImage(displayCard.getCardImage(), width / 2 - CARD_WIDTH / 2, height / 2 - CARD_HEIGHT / 2, CARD_WIDTH, CARD_HEIGHT, null);
+            graphics.drawImage(displayCard.getCardImage(), getWidth() / 2 - CARD_WIDTH / 2, getHeight() / 2 - CARD_HEIGHT / 2, CARD_WIDTH, CARD_HEIGHT, null);
         }
 
         if (players != null) {
-            // Joueur
-            graphics.setColor(Color.YELLOW);
-            graphics.drawRect((width - 200) / 2, height - 202, 200, 200);
-
-            int posx = (width - CARD_SPACE * (numberCardPlayer + 1)) / 2;
-            int posy = height - (CARD_HEIGHT + 20);
+            // Player game
+            int posx = (getWidth() - CARD_SPACE * (numberCardPlayer + 1)) / 2;
+            int posy = getHeight() - (CARD_HEIGHT + 20);
             for (Card card : players.get(0).getCards()) {
-                System.out.println(card.getCard());
                 graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_HEIGHT, null);
                 posx += CARD_SPACE;
             }
 
-            // Bot 1
-            graphics.setColor(Color.BLUE);
-            graphics.drawRect(0, (height - 200) / 2, 200, 200);
-
-            int index = 0;
+            // Bot 1 game
+            posx = 0;
+            posy = getHeight() / 2 - CARD_HEIGHT / 2;
             for (Card card : players.get(1).getCards()) {
                 System.out.println(card.getCard());
-                graphics.drawImage(card.getCardImage(), index, 110, 80, 100, null);
-                index += 40;
+                graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_HEIGHT, null);
+                posx += CARD_SPACE_BOT;
             }
 
-            // Bot 2
-            graphics.setColor(Color.RED);
-            graphics.drawRect((width - 200) / 2, 0, 200, 200);
-
-            index = 0;
+            // Bot 2 game
+            int numberCardBot = players.get(2).getCards().size();
+            posx = (getWidth() - CARD_SPACE_BOT * (numberCardBot + 4 - 1)) / 2;
+            posy = 20;
             for (Card card : players.get(2).getCards()) {
-                System.out.println(card.getCard());
-                graphics.drawImage(card.getCardImage(), index, 220, 80, 100, null);
-                index += 40;
+                graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_WIDTH, null);
+                posx += CARD_SPACE_BOT;
             }
 
-            // Bot 3
-            graphics.setColor(Color.PINK);
-            graphics.drawRect(width - 202, (height - 200) / 2, 200, 200);
-
-            index = 0;
+            // Bot 3 game
+            numberCardBot = players.get(3).getCards().size();
+            posx = getWidth() - CARD_SPACE_BOT * (numberCardBot + 4 - 1);
+            posy = getHeight() / 2 - CARD_HEIGHT / 2;
             for (Card card : players.get(3).getCards()) {
-                System.out.println(card.getCard());
-                graphics.drawImage(card.getCardImage(), index, 330, 80, 100, null);
-                index += 40;
+                graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_HEIGHT, null);
+                posx += CARD_SPACE_BOT;
             }
         }
 
