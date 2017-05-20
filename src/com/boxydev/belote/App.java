@@ -19,6 +19,7 @@ public class App extends JFrame implements ActionListener {
     private List<Player> bots;
     private List<Player> players;
     private Integer distributor = 0;
+    private Integer trump = -1;
 
     public App() {
         setTitle("Belote");
@@ -101,11 +102,25 @@ public class App extends JFrame implements ActionListener {
                 nPlayer++;
             }
 
-            System.out.println(take + " prend atout");
-
             if (!taker) {
                 // Ask for trump second round
+                n = distributor;
+                nPlayer = 0;
+                while (!taker && nPlayer < 4) {
+                    n++;
+                    if (n > 3) n = 0;
+                    trump = players.get(n).secondRound(n, displayCard);
+                    if (trump != 4) {
+                        taker = true;
+                    }
+                    if (taker) {
+                        take = n;
+                    }
+                    nPlayer++;
+                }
             }
+
+            System.out.println(take + " prend atout " + trump);
 
             if (!taker) {
                 // Put all cards in package

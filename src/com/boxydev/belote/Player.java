@@ -1,7 +1,6 @@
 package com.boxydev.belote;
 
 import com.boxydev.belote.card.Card;
-import com.boxydev.belote.card.CardPackage;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -59,10 +58,8 @@ public class Player {
                 for (int i = 0; i < 5; i++) {
                     String trump = displayCard.getColor().getName();
                     if (trump == cards.get(i).getColor().getName()) {
-                        System.out.println(cards.get(i).getFigure().getPointTrump());
                         points += cards.get(i).getFigure().getPointTrump();
                     } else {
-                        System.out.println(cards.get(i).getFigure().getPoint());
                         points += cards.get(i).getFigure().getPoint();
                     }
                 }
@@ -79,22 +76,18 @@ public class Player {
         return false;
     }
 
-    public void distribute(CardPackage cards, List<Player> players) {
-        List<Player> targets = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            if (i != this.getPosition()) {
-                targets.add(players.get(i));
-            }
+    public Integer secondRound(int indexPlayer, Card displayCard) {
+        int response = 4;
+
+        switch (indexPlayer) {
+            case 0 :
+                String[] trumps = {"Coeur", "Pique", "Trefle", "Carreau", "2"};
+                response = JOptionPane.showOptionDialog(null, "Que prenez-vous ?", "Choix atout - Second tour", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, trumps, "1");
+            break;
         }
-        for (Player target : targets) {
-            for (int i = 0; i < 8; i++) {
-                target.cards.add(cards.getCards().get(i));
-                cards.getCards().remove(i);
-            }
-        }
-        for (int i = 7; i >= 0; i--) {
-            this.cards.add(cards.getCards().get(i));
-            cards.getCards().remove(i);
-        }
+
+
+
+        return response;
     }
 }

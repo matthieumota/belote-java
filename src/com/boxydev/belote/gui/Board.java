@@ -77,7 +77,6 @@ public class Board extends JPanel implements ActionListener {
             posx = 0;
             posy = getHeight() / 2 - CARD_HEIGHT / 2;
             for (Card card : players.get(1).getCards()) {
-                System.out.println(card.getCard());
                 graphics.drawImage(card.getCardImage(), posx, posy, CARD_WIDTH, CARD_HEIGHT, null);
                 posx += CARD_SPACE_BOT;
             }
