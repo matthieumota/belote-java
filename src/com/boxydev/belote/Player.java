@@ -1,6 +1,7 @@
 package com.boxydev.belote;
 
 import com.boxydev.belote.card.Card;
+import com.boxydev.belote.card.Color;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -76,18 +77,21 @@ public class Player {
         return false;
     }
 
-    public Integer secondRound(int indexPlayer, Card displayCard) {
+    public Color secondRound(int indexPlayer, Card displayCard) {
         int response = 4;
+        Color[] trumps = {new Color("Coeur"), new Color("Pique"), new Color("Trefle"), new Color("Carreau"), new Color("2")};
 
         switch (indexPlayer) {
             case 0 :
-                String[] trumps = {"Coeur", "Pique", "Trefle", "Carreau", "2"};
                 response = JOptionPane.showOptionDialog(null, "Que prenez-vous ?", "Choix atout - Second tour", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, trumps, "1");
+            break;
+            default :
+                for (int c = 0; c < 4; c++) {
+
+                }
             break;
         }
 
-
-
-        return response;
+        return trumps[response];
     }
 }

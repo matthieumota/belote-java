@@ -2,6 +2,7 @@ package com.boxydev.belote;
 
 import com.boxydev.belote.card.Card;
 import com.boxydev.belote.card.CardPackage;
+import com.boxydev.belote.card.Color;
 import com.boxydev.belote.gui.Board;
 
 import javax.swing.*;
@@ -19,7 +20,7 @@ public class App extends JFrame implements ActionListener {
     private List<Player> bots;
     private List<Player> players;
     private Integer distributor = 0;
-    private Integer trump = -1;
+    private Color trump;
 
     public App() {
         setTitle("Belote");
@@ -98,6 +99,7 @@ public class App extends JFrame implements ActionListener {
                 taker = players.get(n).firstRound(n, displayCard);
                 if (taker) {
                     take = n;
+                    trump = displayCard.getColor();
                 }
                 nPlayer++;
             }
@@ -109,18 +111,15 @@ public class App extends JFrame implements ActionListener {
                 while (!taker && nPlayer < 4) {
                     n++;
                     if (n > 3) n = 0;
-                    trump = players.get(n).secondRound(n, displayCard);
-                    if (trump != 4) {
+                    Color color = players.get(n).secondRound(n, displayCard);
+                    if (color.getName() != "2") {
                         taker = true;
-                    }
-                    if (taker) {
                         take = n;
+                        trump = color;
                     }
                     nPlayer++;
                 }
             }
-
-            System.out.println(take + " prend atout " + trump);
 
             if (!taker) {
                 // Put all cards in package
@@ -133,6 +132,7 @@ public class App extends JFrame implements ActionListener {
                 board.displayCard(displayCard);
             } else {
                 // Oh ! We can play
+                System.out.println(players.get(take).getName() + " prend atout " + trump);
                 players.get(take).getCards().add(displayCard);
                 displayCard = null;
                 board.displayCard(displayCard);
